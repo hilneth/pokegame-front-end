@@ -6,10 +6,6 @@ interface AuthPageProps {
   onLoginSuccess: (trainer: Trainer) => void;
 }
 
-interface AuthPageProps {
-  onLoginSuccess: (trainer: Trainer) => void;
-}
-
 export const AuthPage: React.FC<AuthPageProps> = ({ onLoginSuccess }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [username, setUsername] = useState('');
@@ -28,7 +24,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLoginSuccess }) => {
       if (isLogin) {
         trainer = await authService.login(username, password);
       } else {
-        trainer = await authService.register(username, password, email);
+        trainer = await authService.register(username, password, email); 
       }
       onLoginSuccess(trainer);
     } catch (err: any) {

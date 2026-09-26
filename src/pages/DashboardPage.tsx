@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import type { Trainer, Pokemon } from '../types/types';
 import { pokemonService } from '../services/api';
-import { didCatch, didEncounter, useIdleGame } from '../hooks/useIdleGame';
+import { didEncounter, useIdleGame } from '../hooks/useIdleGame';
 import { BattleArea } from '../components/BattleArea';
 import { PokemonList } from '../components/PokemonList';
+import { Leaderboard } from '../components/Leaderboard';
 
 import mapPng from '../assets/battleground.jpeg';
 
@@ -36,12 +37,6 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ trainer, onLogout 
   };
 
   useEffect(() => {
-    if (didCatch.current == true) {
-      loadPokemons();
-      didCatch.current = false;
-      return;
-    }
-
     if (didRun.current) return;
     didRun.current = true;
     loadPokemons();
@@ -62,6 +57,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ trainer, onLogout 
       setActivePokemon(updated);
       loadPokemons();
     },
+    onPokemonCaught: loadPokemons,
   });
 
   const handleReleasePokemon = async (pokemonId: number) => {
@@ -112,6 +108,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ trainer, onLogout 
           onSelectActive={(poke) => setActivePokemon(poke)}
           onReleasePokemon={handleReleasePokemon}
         />
+        <Leaderboard />
       </main>
     </div>
   );

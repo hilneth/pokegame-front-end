@@ -67,7 +67,7 @@ export const pokemonService = {
     request<import('../types/types').Pokemon>('/pokemon/catch', {
       method: 'POST',
       credentials: "include",
-      body: JSON.stringify({ user_id: trainer_id, id: pokemon_id, name, nickname }),
+      body: JSON.stringify({ user_id: trainer_id, pokemon_id: pokemon_id, name, nickname }),
     }),
 
   getTrainerPokemons: (trainer_id: number) =>
