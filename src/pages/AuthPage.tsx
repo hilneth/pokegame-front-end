@@ -37,7 +37,7 @@ export const AuthPage: React.FC<AuthPageProps> = ({ onLoginSuccess }) => {
   return (
     <div style={styles.container}>
       <div style={styles.card}>
-        <h1 style={styles.title}>PokéIdle Gen 1 & 2</h1>
+        <h1 style={styles.title}>PokéIdle</h1>
         <h2 style={styles.subtitle}>{isLogin ? 'Entrar na Conta' : 'Criar Novo Treinador'}</h2>
 
         {error && <div style={styles.errorMessage}>{error}</div>}

@@ -70,7 +70,7 @@ export const pokemonService = {
       body: JSON.stringify({ user_id: trainer_id, pokemon_id: pokemon_id, name, nickname }),
     }),
 
-  getTrainerPokemons: (trainer_id: number) =>
+  getTrainerPokemons: () =>
     request<{ pokemons: import('../types/types').Pokemon[] }>(`/pokemon/trainer/`, {
       method: 'GET',
       credentials: 'include'

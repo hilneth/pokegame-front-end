@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import type { Pokemon } from '../types/types';
 
 interface PokemonListProps {

@@ -1,75 +1,40 @@
-# React + TypeScript + Vite
+# Pokémon Idle Game - API Front-End
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+O Pokémon Idle Game é um jogo web interativo baseado em progressão contínua (idle game). O jogador cria uma conta de treinador, seleciona um Pokémon da sua equipe para batalhar em rotas do jogo e assiste às batalhas automáticas em tempo real. Projeto desenvolvido para a Pósgraduação de desenvolvimento de software da PUC-RJ.
+Lembrando que o projeto deve ser utilizado em conjunto com o back-end encontrado aqui: https://github.com/hilneth/pokegame-back-end
 
-Currently, two official plugins are available:
+- Batalha Automática: O Pokémon do jogador ataca o Pokémon selvagem em intervalos regulares.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Progressão de Nível e Moedas: Ao derrotar adversários, o Pokémon ganha pontos de experiência (XP) e o treinador recebe moedas.
 
-## React Compiler
+- Captura Automática: Existe uma probabilidade do Pokémon selvagem ser capturado após a derrota e adicionado à Pokédex/Inventário do treinador.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Classificação (Leaderboard): Ranking dos melhores treinadores baseado na quantidade total de moedas acumuladas.
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+## Arquitetura da Aplicação
+```
+┌─────────────────────────────────────────┐
+│     Interface Web (Front-End)           │
+│     React 18 + TypeScript + Vite        │
+└────────────────────┬────────────────────┘
+                     │
+                     │  Chamadas REST (JSON / Cookies)
+                     ▼
+┌─────────────────────────────────────────┐        ┌─────────────────────────┐
+│      API Back-End (Python / Flask)      ├───────►│  Banco de Dados SQLite  │
+└────────────────────┬────────────────────┘        └─────────────────────────┘
+                     │
+                     │  HTTP GET (IDs 1 a 251)
+                     ▼
+┌─────────────────────────────────────────┐
+│     PokéAPI (API Externa Pública)       │
+└─────────────────────────────────────────┘
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+## Execução via Docker
+```bash
+# Gerar a imagem do container
+docker build -t pokeidle-front .
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
-```
+# Executar o container na porta 5000
+docker run -d -p 3000:80 --name pokeidle-front pokeidle-front

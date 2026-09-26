@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect} from 'react';
 import type { Trainer, Pokemon } from '../types/types';
 import { pokemonService } from '../services/api';
 import { didEncounter, useIdleGame } from '../hooks/useIdleGame';
@@ -14,8 +14,8 @@ interface DashboardPageProps {
 }
 export const didRun = {current: false}
 
-export const fetchUserPokemon = async (trainer_id: number) => {
-  const data = await pokemonService.getTrainerPokemons(trainer_id);
+export const fetchUserPokemon = async () => {
+  const data = await pokemonService.getTrainerPokemons();
   return data
 }
 
@@ -26,7 +26,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({ trainer, onLogout 
 
   const loadPokemons = async () => {
     try {
-      const data = await fetchUserPokemon(currentTrainer.id);
+      const data = await fetchUserPokemon();
       setTrainerPokemons(data.pokemons);
       if (data.pokemons.length > 0 && !activePokemon) {
         setActivePokemon(data.pokemons[0]);
