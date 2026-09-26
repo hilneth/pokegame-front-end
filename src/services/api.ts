@@ -22,16 +22,18 @@ async function request<T>(endpoint: string, config?: RequestInit): Promise<T> {
 
 // Métodos de Autenticação
 export const authService = {
-  register: (username: string, password: string) =>
+  register: (username: string, password: string, email: string) =>
     request<import('../types/types').Trainer>('/auth/register', {
       method: 'POST',
-      body: JSON.stringify({ username, password }),
+      body: JSON.stringify({ username, email, password }),
+      credentials: 'include'
     }),
 
   login: (username: string, password: string) =>
     request<import('../types/types').Trainer>('/auth/login', {
       method: 'POST',
       body: JSON.stringify({ username, password }),
+      credentials: "include"
     }),
 };
 
@@ -41,17 +43,20 @@ export const gameService = {
   getLeaderboard: () =>
     request<{ leaderboard: import('../types/types').LeaderboardEntry[] }>('/game/leaderboard', {
       method: 'GET',
+      credentials: 'include'
     }),
 
   getWildEncounter: () =>
     request<import('../types/types').WildEncounter>('/game/encounter', {
       method: 'GET',
+      credentials: 'include'
     }),
 
-  updateProgress: (trainer_id: number, coins?: number, current_route?: number) =>
+  updateProgress: (trainer_id: number, currency: number, last_route?: number) =>
     request<import('../types/types').Trainer>('/game/progress', {
       method: 'PUT',
-      body: JSON.stringify({ trainer_id, coins, current_route }),
+      body: JSON.stringify({ id: trainer_id, currency, last_route }),
+      credentials: 'include'
     }),
 };
 
@@ -61,23 +66,27 @@ export const pokemonService = {
   catchPokemon: (trainer_id: number, pokemon_id: number, name: string, nickname?: string) =>
     request<import('../types/types').Pokemon>('/pokemon/catch', {
       method: 'POST',
-      body: JSON.stringify({ trainer_id, pokemon_id, name, nickname }),
+      credentials: "include",
+      body: JSON.stringify({ user_id: trainer_id, id: pokemon_id, name, nickname }),
     }),
 
   getTrainerPokemons: (trainer_id: number) =>
-    request<{ pokemons: import('../types/types').Pokemon[] }>(`/pokemon/trainer/${trainer_id}`, {
+    request<{ pokemons: import('../types/types').Pokemon[] }>(`/pokemon/trainer/`, {
       method: 'GET',
+      credentials: 'include'
     }),
 
   updatePokemon: (pokemon_instance_id: number, level: number, experience: number) =>
     request<import('../types/types').Pokemon>('/pokemon/update', {
       method: 'PUT',
       body: JSON.stringify({ pokemon_instance_id, level, experience }),
+      credentials: "include"
     }),
 
   
   releasePokemon: (pokemon_id: number) =>
     request<{ message: string }>(`/pokemon/${pokemon_id}`, {
       method: 'DELETE',
+      credentials: "include"
     }),
 };

@@ -12,6 +12,7 @@ export interface Pokemon {
   nickname: string;
   level: number;
   experience: number;
+  sprite: string;
 }
 
 export interface WildEncounter {
