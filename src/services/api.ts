@@ -1,6 +1,5 @@
 const BASE_URL = 'http://localhost:5000/api/v1';
 
-// Função auxiliar genérica para realizar requisições
 async function request<T>(endpoint: string, config?: RequestInit): Promise<T> {
   const response = await fetch(`${BASE_URL}${endpoint}`, {
     headers: {
@@ -20,7 +19,6 @@ async function request<T>(endpoint: string, config?: RequestInit): Promise<T> {
 }
 
 
-// Métodos de Autenticação
 export const authService = {
   register: (username: string, password: string, email: string) =>
     request<import('../types/types').Trainer>('/auth/register', {
@@ -38,7 +36,6 @@ export const authService = {
 };
 
 
-// Métodos de Mecânica do Jogo
 export const gameService = {
   getLeaderboard: () =>
     request<{ leaderboard: import('../types/types').LeaderboardEntry[] }>('/game/leaderboard', {
@@ -61,7 +58,6 @@ export const gameService = {
 };
 
 
-// Métodos de Gerenciamento de Pokémons
 export const pokemonService = {
   catchPokemon: (trainer_id: number, pokemon_id: number, name: string, nickname?: string) =>
     request<import('../types/types').Pokemon>('/pokemon/catch', {

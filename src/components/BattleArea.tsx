@@ -3,7 +3,7 @@ import type { WildEncounter, Pokemon } from '../types/types';
 import battleImageSrc from '../assets/battleground.jpeg'
 
 interface BattleAreaProps {
-  mapImageSrc: string; // Caminho ou import da imagem PNG do mapa
+  mapImageSrc: string; 
   wildPokemon: WildEncounter | null;
   wildHp: number;
   maxWildHp: number;
@@ -25,9 +25,7 @@ export const BattleArea: React.FC<BattleAreaProps> = ({
 
   return (
     <div style={styles.container}>
-      {/* Cenário do Jogo com a imagem do Mapa */}
       <div style={{ ...styles.arena, backgroundImage: `url(${mapImageSrc})` }}>
-        {/* Pokémon Selvagem (Topo/Direita) */}
         {isLoading ? (
           <div style={styles.loadingText}>Procurando Pokémon selvagem...</div>
         ) : wildPokemon ? (
@@ -46,7 +44,6 @@ export const BattleArea: React.FC<BattleAreaProps> = ({
           </div>
         ) : null}
 
-        {/* Pokémon do Jogador (Base/Esquerda) */}
         {activePokemon && (
           <div style={styles.activeContainer}>
             <div style={styles.hpBarContainer}>
@@ -58,7 +55,6 @@ export const BattleArea: React.FC<BattleAreaProps> = ({
         )}
       </div>
 
-      {/* Caixa de Logs da Batalha */}
       <div style={styles.logBox}>
         <h4 style={styles.logTitle}>Histórico de Batalha</h4>
         <div style={styles.logList}>
